@@ -31,14 +31,16 @@ export default {
         orderTotal: 10,
       };
       axios
-        .post('https://sendemailkhfa.azurewebsites.net/api/sendmail', formData)
+        // .post('https://sendemailkhfa.azurewebsites.net/api/sendmail', formData)
+        .post('http://localhost:7072/api/sendmail', formData)
         .then((response) => {
           console.log(response);
         });
     },
     sendEmailGet() {
       axios
-        .get('https://sendemailkhfa.azurewebsites.net/api/mail')
+        // .get('https://sendemailkhfa.azurewebsites.net/api/mail')
+        .get('http://localhost:7072/api/mail')
         .then((response) => {
           console.log(response);
         });
