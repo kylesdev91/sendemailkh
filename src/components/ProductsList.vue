@@ -30,10 +30,7 @@ export default {
         orderTotal: 10,
       };
       axios
-        .post(
-          'https://sendemailkhfa.azurewebsites.net/api/sendmailwmsg',
-          formData
-        )
+        .post('https://sendemailkhfa.azurewebsites.net/api/sendmail', formData)
         .then((response) => {
           console.log(response);
         });
