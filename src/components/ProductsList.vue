@@ -32,7 +32,8 @@ export default {
       };
       axios
         // .post('https://sendemailkhfa.azurewebsites.net/api/sendmail', formData)
-        .post('http://localhost:7072/api/sendmail', formData)
+        // .post('http://localhost:7072/api/sendmail', formData)
+        .post('/api/sendmail', formData)
         .then((response) => {
           console.log(response);
         });
@@ -40,7 +41,8 @@ export default {
     sendEmailGet() {
       axios
         // .get('https://sendemailkhfa.azurewebsites.net/api/mail')
-        .get('http://localhost:7072/api/mail')
+        // .get('http://localhost:7072/api/mail')
+        .get('/api/mail')
         .then((response) => {
           console.log(response);
         });
