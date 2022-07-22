@@ -1,17 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <button @click="sendEmail">Email</button>
+  <!-- <img alt="Vue logo" src="./assets/logo.png">
+  <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+  <Products />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
+import Products from './views/Products.vue';
+// import HelloWorld from './components/HelloWorld.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    Products,
+  },
+  methods: {
+    sendEmail() {
+      var content = this.items.reduce(function (a, b) {
+        return a + '<tr><td>' + b.id + '</a></td><td>' + b.name + '</td></tr>';
+      }, '');
+
+      var formData = {
+        emailSubject: 'Online Order',
+        emailBody: content,
+        orderTotal: 10,
+      };
+      axios
+        .post(
+          'https://sendemailkhfa.azurewebsites.net/api/sendmailwmsg',
+          formData
+        )
+        .then((response) => {
+          console.log(response);
+        });
+    },
+  },
+};
 </script>
 
 <style>
