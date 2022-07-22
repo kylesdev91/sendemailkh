@@ -1,6 +1,7 @@
 <template>
   <div>
-    <button @click="sendEmail">Email</button>
+    <button @click="sendEmail">Email w POST</button>
+    <button @click="sendEmailGet">Email w GET</button>
   </div>
   <h2>{{ product.id }}</h2>
   <h2>{{ product.name }}</h2>
@@ -31,6 +32,13 @@ export default {
       };
       axios
         .post('https://sendemailkhfa.azurewebsites.net/api/sendmail', formData)
+        .then((response) => {
+          console.log(response);
+        });
+    },
+    sendEmailGet() {
+      axios
+        .get('https://sendemailkhfa.azurewebsites.net/api/mail')
         .then((response) => {
           console.log(response);
         });
