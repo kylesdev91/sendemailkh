@@ -1,5 +1,5 @@
 <template>
-  
+  <button @click="sendEmail">Email</button>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <Products />
@@ -14,7 +14,6 @@ export default {
   components: {
     Products,
   },
-  
 };
 </script>
 
