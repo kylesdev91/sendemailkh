@@ -3,49 +3,66 @@
     <button @click="sendEmail">Email w POST</button>
     <button @click="sendEmailGet">Email w GET</button>
   </div>
+  <div>
+    <a v-if="userInfo" :href="`/.auth/logout`">Logout</a>
+    <a v-if="!userInfo" :href="`/.auth/login/aad`">Login</a>
+    <div class="user" v-if="userInfo">
+      <p>Welcome</p>
+      <p>{{ userInfo.userDetails }}</p>
+    </div>
+  </div>
   <h2>{{ product.id }}</h2>
   <h2>{{ product.name }}</h2>
 </template>
-
 <script>
-import axios from 'axios';
 import items from '../data/items';
-
+import axios from 'axios';
 export default {
-  props: ['product'],
   data() {
     return {
       items: items,
-      message: '',
+      userInfo: {
+        type: Object,
+        default() {},
+      },
     };
   },
+  async created() {
+    this.userInfo = await this.getUserInfo();
+  },
+  computed: {
+    products() {
+      return this.$store.getters.cartItems;
+    },
+  },
+  props: ['product'],
   methods: {
     sendEmail() {
       var content = this.items.reduce(function (a, b) {
         return a + '<tr><td>' + b.id + '</a></td><td>' + b.name + '</td></tr>';
       }, '');
-
       var formData = {
         emailSubject: 'Online Order',
         emailBody: content,
-        orderTotal: 10,
+        orderTotal: 10
       };
-      axios
-        // .post('https://sendemailkhfa.azurewebsites.net/api/sendmail', formData)
-        // .post('http://localhost:7072/api/sendmail', formData)
-        .post('/api/sendmail', formData)
-        .then((response) => {
-          console.log(response);
-        });
+      axios.post('/api/sendmail', formData).then((response) => {
+        console.log(response);
+      });
     },
-    sendEmailGet() {
-      axios
-        // .get('https://sendemailkhfa.azurewebsites.net/api/mail')
-        // .get('http://localhost:7072/api/mail')
-        .get('/api/mail')
-        .then((response) => {
-          console.log(response);
-        });
+    login() {
+      this.$router.push('/.auth/login/aad');
+    },
+    async getUserInfo() {
+      try {
+        const response = await fetch('/.auth/me');
+        const payload = await response.json();
+        const { clientPrincipal } = payload;
+        return clientPrincipal;
+      } catch (error) {
+        console.error('No profile could be found');
+        return undefined;
+      }
     },
   },
 };
