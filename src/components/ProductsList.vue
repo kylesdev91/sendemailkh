@@ -44,7 +44,7 @@ export default {
       var formData = {
         emailSubject: 'Online Order',
         emailBody: content,
-        orderTotal: 10
+        orderTotal: 10,
       };
       axios.post('/api/sendmail', formData).then((response) => {
         console.log(response);
